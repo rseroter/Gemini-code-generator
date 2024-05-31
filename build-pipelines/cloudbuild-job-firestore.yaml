@@ -1,0 +1,48 @@
+steps:
+  # Print the contents of the current directory
+  - name: 'bash'
+    id: 'Show source files'
+    script: |
+      #!/usr/bin/env bash
+      ls -l
+
+  # Copy the JAR file from Cloud Storage
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'Copy AI generator from Cloud Storage'
+    args: ['cp', 'gs://seroter-llm-demo-tools/demo-0.0.1-SNAPSHOT.jar', 'demo-0.0.1-SNAPSHOT.jar']
+
+  # Print the contents of the current directory
+  - name: 'bash'
+    id: 'Show source files and builder tool'
+    script: |
+      #!/usr/bin/env bash
+      ls -l
+
+  # Run the JAR file
+  - name: 'ubuntu'
+    id: 'Run AI generator to create code from prompts'
+    script: |
+      #!/usr/bin/env bash
+      apt-get update && apt-get install -y openjdk-21-jdk
+      java -jar  demo-0.0.1-SNAPSHOT.jar --prompt-file=app-prompts-job-firestore.json
+
+  # Print the contents of the generated directory
+  - name: 'bash'
+    id: 'Show generated files'
+    script: |
+      #!/usr/bin/env bash
+      ls ./generated-job-firestore -l
+
+  # Containerize the code and upload to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Containerize generated code'
+    args: ['build', '-t', 'us-west1-docker.pkg.dev/seroter-project-base/ai-generated-images/generated-job-firestore:latest', './generated-job-firestore']
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push container to Artifact Registry'
+    args: ['push', 'us-west1-docker.pkg.dev/seroter-project-base/ai-generated-images/generated-job-firestore']
+
+ # Deploy container image to Cloud Run Jobs
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy container to Cloud Run'
+    entrypoint: gcloud
+    args: ['run', 'jobs', 'deploy', 'generated-job-firestore', '--image', 'us-west1-docker.pkg.dev/seroter-project-base/ai-generated-images/generated-job-firestore', '--region', 'us-west1']

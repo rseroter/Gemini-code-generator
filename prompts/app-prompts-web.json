@@ -1,0 +1,21 @@
+{
+  "folder": "generated-web",
+  "prompts": [
+    {
+      "fileName": "employee.json",
+      "prompt": "Generate a JSON structure for an object with fields for id, full name, state date, and office location. Populate it with sample data. Only return the JSON content and nothing else."
+    },
+    {
+      "fileName": "index.js",
+      "prompt": "Create a node.js program. It instantiates an employee object that looks like the employee.json structure. Start up a web server on port 8080 and expose a route at /employee return the employee object defined earlier."
+    },
+    {
+      "fileName": "package.json",
+      "prompt": "Create a valid package.json for this node.js application. Do not include any comments in the JSON."
+    },
+    {
+      "fileName": "Dockerfile",
+      "prompt": "Create a Dockerfile for this node.js application that uses a minimal base image and exposes the app on port 8080."
+    }
+  ]
+}

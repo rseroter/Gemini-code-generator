@@ -1,0 +1,17 @@
+{
+  "folder": "generated-job",
+  "prompts": [
+    {
+      "fileName": "main.py",
+      "prompt": "Create a Python app with a main function that prints 'running job' and have the start script try to call that main function and if there's an exception, prints the error. "
+    },
+    {
+      "fileName": "Procfile",
+      "prompt": "Create a Procfile for python3 that starts up main.py"
+    },
+    {
+      "fileName": "Dockerfile",
+      "prompt": "Create a Dockerfile for this Python batch application that uses a minimal base image and doesn't expose any ports"
+    }
+  ]
+}

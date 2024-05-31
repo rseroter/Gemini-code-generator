@@ -1,0 +1,21 @@
+{
+  "folder": "generated-job-firestore",
+  "prompts": [
+    {
+      "fileName": "main.py",
+      "prompt": "Create a Python app with a main function that initializes a firestore database object with project seroter-project-base and Application Default credentials. Add two documents to the Employees collection. Generate random id, fullname, startdate, and location data for each document. Have the start script try to call that main function and if there's an exception, prints the error."
+    },
+    {
+      "fileName": "requirements.txt",
+      "prompt": "Create a requirements.txt file for the packages used by this app"
+    },
+    {
+      "fileName": "Procfile",
+      "prompt": "Create a Procfile for python3 that starts up main.py"
+    },
+    {
+      "fileName": "Dockerfile",
+      "prompt": "Create a Dockerfile for this Python batch application that uses a minimal base image and doesn't expose any ports"
+    }
+  ]
+}
